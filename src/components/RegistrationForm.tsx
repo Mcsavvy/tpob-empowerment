@@ -48,11 +48,18 @@ async function LoginUser(email: string) {
 
 
 async function CastVote(accessToken: string) {
-  await axiosInstance.post("poll/answers/7/vote/", {}, {
-    headers: {
-      Authorization: `JWT ${accessToken}`,
-    },
-  });
+  await Promise.all([
+    await axiosInstance.post("poll/answers/7/vote/", {}, {
+      headers: {
+        Authorization: `JWT ${accessToken}`,
+      },
+    }),
+    await axiosInstance.post("poll/answers/8/vote/", {}, {
+      headers: {
+        Authorization: `JWT ${accessToken}`,
+      },
+    })
+  ]);
 }
 
 
