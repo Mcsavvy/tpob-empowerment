@@ -91,7 +91,7 @@ const RegistrationForm: React.FC = () => {
 
   function withClearError<A, R>(fn: (...args: [A]) => R) {
     return (...args: [A]): void => {
-      if (status == "error" ) setStatus("idle");
+      if (status == "error" || status == "success" ) setStatus("idle");
       fn(...args);
     }
   }
@@ -123,7 +123,7 @@ const RegistrationForm: React.FC = () => {
                   id="fname"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="John"
-                  onInput={(e) => setFirstName(e.currentTarget.value)}
+                  onInput={(e) => setFirstName(e.currentTarget.value.trim())}
                   value={firstName}
                   required
                 />
@@ -141,7 +141,7 @@ const RegistrationForm: React.FC = () => {
                   id="lname"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Doe"
-                  onInput={(e) => setLastName(e.currentTarget.value)}
+                  onInput={(e) => setLastName(e.currentTarget.value.trim())}
                   value={lastName}
                   required
                 />
@@ -159,7 +159,7 @@ const RegistrationForm: React.FC = () => {
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="johndoe@example.com"
-                  onInput={(e) => setEmail(e.currentTarget.value)}
+                  onInput={(e) => setEmail(e.currentTarget.value.trim()}
                   value={email}
                   required
                 />
@@ -184,7 +184,7 @@ const RegistrationForm: React.FC = () => {
               <VoteButton
                 onClick={() => {
                   setStatus("loading");
-                  RegisterUser(firstName, lastName, email, selectedCategory)
+                  RegisterUser(firstName.trim(), lastName.trim(), email.trim(), selectedCategory)
                     .then(() => LoginUser(email))
                     .then(CastVote)
                     .then(() => setStatus("success"))
